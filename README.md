@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![Travis build
+status](https://travis-ci.org/hypertidy/hmmr.svg?branch=master)](https://travis-ci.org/hypertidy/hmmr)
 <!-- badges: end -->
 
 The goal of hmmr is to provide the heightmap meshing facility of the
