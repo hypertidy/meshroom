@@ -39,7 +39,7 @@ remotes::install_github("hypertidy/hmmr")
 library(hmmr)
 f <- system.file("extdata/volcano1.png", package = "hmmr", mustWork = TRUE)
 
-hmmr:::hmm_triangles(f)
+hmmr::hmm_triangles(f)
 #>   error = 5.96046e-08
 #>   points = 3466
 #>   triangles = 6769
@@ -47,12 +47,19 @@ hmmr:::hmm_triangles(f)
 #> list()
 
 
-hmmr:::hmm_triangles(f, max_triangles = 50)
+hmmr::hmm_triangles(f, max_triangles = 50)
 #>   error = 0.0638039
 #>   points = 29
 #>   triangles = 51
 #>   vs. naive = 0.494186%
 #> list()
+```
+
+Now write to STL so we can [check it
+out](https://github.com/hypertidy/hmmr/blob/master/man/figures/volcano.stl).
+
+``` r
+hmmr::hmm_triangles(f, stl_file = "man/figures/volcano1.stl")
 ```
 
 ## notes
