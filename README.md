@@ -21,9 +21,19 @@ TODO
   - allow input from in memory matrix, and maintain real world z values
   - capture output triangles
   - sort out use of hmm, see notes below and in 00\_hmmr.cpp
-  - maintain mapping for geospatial coordinates
+  - DONE (see below): maintain mapping for geospatial coordinates
 
-<!-- end list -->
+## Installation
+
+Only on Linux.
+
+    sudo apt-get install libglm-dev
+
+``` r
+remotes::install_github("hypertidy/hmmr")
+```
+
+## Example
 
 ``` r
 library(hmmr)
@@ -69,6 +79,42 @@ rgl::rgl.clear(); r <- rgl::readSTL("stl.stl", plot = TRUE, col = "grey", lit = 
 
 ![alt text](man/figures/topo.png
 "Etopo2 / 8 as 77053 triangles in 38861 points")
+
+## Example of restoring geospatial information.
+
+``` r
+library(ceramic)
+ex <- raster::extent(144, 149, -44, -40)
+el <- cc_elevation(ex, zoom = 5)
+el[el < 1] <- NA
+
+el <- el - cellStats(el, min)
+el <- el / (cellStats(el, max)/256)
+
+tfile <- tempfile(fileext = ".png")
+rgdal::writeGDAL(as(el, "SpatialGridDataFrame"), tfile, drivername = "PNG")
+sfile <- tempfile(fileext = ".stl")
+hmmr:::hmm_triangles(tfile,  stl_file = sfile, z_scale = TRUE)
+tris <- rgl::readSTL(sfile, plot = FALSE)
+
+## now re-map geographic coordinates back int
+library(raster)
+cell <- cellFromXY(setExtent(el, raster::extent(1, ncol(el), 1, nrow(el))), 
+                   tris[,1:2] + 1)
+
+
+tris[,1:2] <- xyFromCell(el, cell)
+
+## and unproject just for fun
+tris[,1:2] <- rgdal::project(tris[,1:2], projection(el), inv = TRUE)
+rgl::rgl.clear(); rgl::triangles3d(tris[,1], tris[,2], tris[,3], 
+                                   col = rep(c("white", "grey", "black", "darkgrey"), each = 3));
+rgl::aspect3d(1, 1, .035); rgl::rglwidget()
+rgl::par3d()$bbox
+```
+
+![alt text](man/figures/geo_triangles.png
+"Tasmania triangulated in longlat")
 
 -----
 
