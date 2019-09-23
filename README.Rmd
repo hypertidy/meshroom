@@ -58,7 +58,7 @@ hmmr::hmm_triangles(f)
 hmmr::hmm_triangles(f, max_triangles = 50)
 ```
 
-Now write to STL so we can [check it out](https://github.com/hypertidy/hmmr/blob/master/man/figures/volcano.stl). 
+Now write to STL so we can [check it out](https://github.com/hypertidy/hmmr/blob/master/man/figures/volcano1.stl). 
 
 
 

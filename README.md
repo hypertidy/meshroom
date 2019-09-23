@@ -56,7 +56,7 @@ hmmr::hmm_triangles(f, max_triangles = 50)
 ```
 
 Now write to STL so we can [check it
-out](https://github.com/hypertidy/hmmr/blob/master/man/figures/volcano.stl).
+out](https://github.com/hypertidy/hmmr/blob/master/man/figures/volcano1.stl).
 
 ``` r
 hmmr::hmm_triangles(f, z_exaggeration = 30, stl_file = "man/figures/volcano1.stl")
