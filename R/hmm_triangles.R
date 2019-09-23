@@ -17,7 +17,7 @@
 #' @param z_exaggeration z exaggeration, default is `1`
 #' @param quiet report metrics from triangulation, default is `TRUE`
 #' @param stl_file if set the triangulation will be written to file, default is no write `""`
-#'
+#' @param normal_file if set the normal map will be written to file, default is no write `""`
 #' @return nothing at the moment, an empty list
 #' @export
 #'
@@ -36,10 +36,16 @@ hmm_triangles <- function(x,  invert = FALSE,
                           z_scale = 1,
                           z_exaggeration = 1,
                           quiet = FALSE,
-                          stl_file = "") {
+                          stl_file = "",
+                          normal_file = "") {
   if (nchar(stl_file) > 0) {
     if (file.exists(stl_file)) {
-      stop(sprintf("file '%s' already exists, please delete or specify a different file for output"))
+      stop(sprintf("file '%s' already exists, please delete or specify a different file for output", stl_file))
+    }
+  }
+  if (nchar(normal_file) > 0) {
+    if (file.exists(normal_file)) {
+      stop(sprintf("file '%s' already exists, please delete or specify a different file for output", normal_file))
     }
   }
   hmmr_cpp(x,
@@ -54,6 +60,7 @@ hmm_triangles <- function(x,  invert = FALSE,
            z_scale = z_scale,
            z_exaggeration = z_exaggeration,
            quiet = quiet,
-           stl_file = stl_file
+           stl_file = stl_file,
+           normal_file = normal_file
            )
 }

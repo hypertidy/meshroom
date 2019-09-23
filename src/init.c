@@ -8,10 +8,10 @@
 */
 
 /* .Call calls */
-extern SEXP _hmmr_hmmr_cpp(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP _hmmr_hmmr_cpp(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_hmmr_hmmr_cpp", (DL_FUNC) &_hmmr_hmmr_cpp, 13},
+    {"_hmmr_hmmr_cpp", (DL_FUNC) &_hmmr_hmmr_cpp, 14},
     {NULL, NULL, 0}
 };
 

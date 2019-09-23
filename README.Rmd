@@ -26,9 +26,11 @@ It currently does not do anything *unless `file_stl` is specified*, the meshing 
 TODO
 
 - DONE: STL output
-- allow input from in memory matrix
+- allow input from in memory matrix, and maintain real world z values
 - capture output triangles
 - sort out use of hmm, see notes below and in 00_hmmr.cpp
+- maintain mapping for geospatial coordinates
+
 
 ```{r hmmr}
 library(hmmr)

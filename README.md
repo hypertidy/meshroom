@@ -18,9 +18,10 @@ meshing is run but nothing is returned but an empty list and a message.
 TODO
 
   - DONE: STL output
-  - allow input from in memory matrix
+  - allow input from in memory matrix, and maintain real world z values
   - capture output triangles
   - sort out use of hmm, see notes below and in 00\_hmmr.cpp
+  - maintain mapping for geospatial coordinates
 
 <!-- end list -->
 

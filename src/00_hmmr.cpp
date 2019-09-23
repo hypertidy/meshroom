@@ -33,7 +33,8 @@ List hmmr_cpp(std::vector< std::string > x,
               NumericVector z_scale,
               NumericVector z_exaggeration,
               LogicalVector quiet,
-              std::vector< std::string > stl_file
+              std::vector< std::string > stl_file,
+              std::vector< std::string > normal_file
               ) {
   const std::string inFile = (std::string)x[0];
   const auto hm = std::make_shared<Heightmap>(inFile);
@@ -98,14 +99,14 @@ List hmmr_cpp(std::vector< std::string > x,
   if (stl_file[0] != "") {
     SaveBinarySTL(stl_file[0], points, triangles);
   }
-  // done();
 
-  // // compute normal map
-  // if (!normalmapPath.empty()) {
-  //   done = timed("computing normal map");
-  //   hm->SaveNormalmap(normalmapPath, zScale * zExaggeration);
-  //   done();
-  // }
+
+  // compute normal map
+  if (normal_file[0] != "") {
+
+     hm->SaveNormalmap(normal_file[0], z_scale[0] * z_exaggeration[0]);
+
+  }
 
   List out = List::create();
   return out;
