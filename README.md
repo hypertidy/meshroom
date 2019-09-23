@@ -59,7 +59,7 @@ Now write to STL so we can [check it
 out](https://github.com/hypertidy/hmmr/blob/master/man/figures/volcano.stl).
 
 ``` r
-hmmr::hmm_triangles(f, stl_file = "man/figures/volcano1.stl")
+hmmr::hmm_triangles(f, z_exaggeration = 10, stl_file = "man/figures/volcano1.stl")
 ```
 
 ## notes
