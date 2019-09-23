@@ -1,0 +1,53 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# hmmr
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of hmmr is to provide the heightmap meshing facility of the [hmm library](https://github.com/fogleman/hmm) to R. 
+
+It currently does not do anything, the meshing is run but nothing is returned but an empty list and a message. 
+
+TODO
+
+- allow input from in memory matrix
+- capture output triangles
+
+```{r hmmr}
+library(hmmr)
+f <- system.file("extdata/volcano1.png", package = "hmmr", mustWork = TRUE)
+
+hmmr:::hmm_triangles(f)
+
+
+hmmr:::hmm_triangles(f, max_triangles = 50)
+
+```
+## notes
+
+```
+## https://github.com/fogleman/hmm
+fs::dir_copy("../hmm/src", "./src")
+
+tools::package_native_routine_registration_skeleton("../hmmr", "src/init.c",character_only = FALSE)
+```
+
+---
+ Please note that the 'hmmr' project is released with a
+  [Contributor Code of Conduct](https://github.com/hypertidy/hmmr/blob/master/CODE_OF_CONDUCT.md).
+  By contributing to this project, you agree to abide by its terms.
+  

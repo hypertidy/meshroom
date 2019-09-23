@@ -1,0 +1,25 @@
+hmm_triangles <- function(x,  invert = FALSE,
+                          blur_sigma = 0,
+                          border_size = 0,
+                          border_height = 1,
+                          base_height = 0,
+                          max_error = 0.001,
+                          max_triangles = 0,
+                          max_points = 0,
+                          z_scale = 1,
+                          z_exaggeration = 1,
+                          quiet = FALSE) {
+  hmmr_cpp(x,
+           invert = invert,
+           blur_sigma = blur_sigma,
+           border_size = border_size,
+           border_height = border_height,
+           base_height = base_height,
+           max_error = max_error,
+           max_triangles = max_triangles,
+           max_points = max_points,
+           z_scale = z_scale,
+           z_exaggeration = z_exaggeration,
+           quiet = quiet
+           )
+}

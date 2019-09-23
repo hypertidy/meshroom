@@ -1,0 +1,25 @@
+Package: hmmr
+Title: Heightmap Meshing
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "Michael D.",
+           family = "Sumner",
+           role = c("aut", "cre"),
+           email = "mdsumner@gmail.com",
+           comment = c(ORCID = "YOUR-ORCID-ID")), 
+           person(given = "Michael", 
+                  family = "Fogleman", 
+                  role = c("aut"), comment = "author of hmm library"))
+Description: Heightmap meshing is an efficient triangulation of a raster height map using the 'hmm' library
+ a modern implementation of a nice algorithm from the 1995 paper 'Fast Polygonal Approximation of Terrains and 
+ Height Fields' by Garland and Heckbert <doi:10.1.1.70.9740>. The meshes produced by hmm satisfy the Delaunay condition 
+ and can satisfy a specified maximal error or maximal number of triangles or vertices. 
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+URL: https://github.com/fogleman/hmm
+LinkingTo: 
+    Rcpp
+Imports: 
+    Rcpp
