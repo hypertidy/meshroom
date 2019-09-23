@@ -17,6 +17,7 @@ TODO
 
   - allow input from in memory matrix
   - capture output triangles
+  - sort out use of hmm, see notes
 
 <!-- end list -->
 
@@ -25,27 +26,42 @@ library(hmmr)
 f <- system.file("extdata/volcano1.png", package = "hmmr", mustWork = TRUE)
 
 hmmr:::hmm_triangles(f)
-#>   error = 4.65661e-10
-#>   points = 160
-#>   triangles = 314
-#>   vs. naive = 3.04264%
+#>   error = 5.96046e-08
+#>   points = 3466
+#>   triangles = 6769
+#>   vs. naive = 65.5911%
 #> list()
 
 
 hmmr:::hmm_triangles(f, max_triangles = 50)
-#>   error = 0.00376332
-#>   points = 28
-#>   triangles = 50
-#>   vs. naive = 0.484496%
+#>   error = 0.0638039
+#>   points = 29
+#>   triangles = 51
+#>   vs. naive = 0.494186%
 #> list()
 ```
 
 ## notes
 
-    ## https://github.com/fogleman/hmm
-    fs::dir_copy("../hmm/src", "./src")
-    
-    tools::package_native_routine_registration_skeleton("../hmmr", "src/init.c",character_only = FALSE)
+``` 
+## https://github.com/fogleman/hmm
+fs::dir_copy("../hmm/src", "./src")
+
+tools::package_native_routine_registration_skeleton("../hmmr", "src/init.c",character_only = FALSE)
+
+```
+
+``` r
+## local testing
+library(raster)
+d <- raadtools::readtopo("etopo2", xylim = raster::extent(100, 180, -70, -30))
+d <- d - cellStats(d, min)
+d <- d / (cellStats(d, max)/256)
+d <- aggregate(d, fact = 8)
+rgdal::writeGDAL(as(d, "SpatialGridDataFrame"), "etopo.png", drivername = "PNG")
+unlink("stl.stl"); hmmr:::hmm_triangles("etopo.png",  stl_file = "stl.stl")
+rgl::rgl.clear(); r <- rgl::readSTL("stl.stl", plot = TRUE, col = "grey", lit = TRUE); rgl::aspect3d(1, 1, .2); rgl::rglwidget()
+```
 
 -----
 

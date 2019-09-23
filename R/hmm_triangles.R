@@ -8,7 +8,13 @@ hmm_triangles <- function(x,  invert = FALSE,
                           max_points = 0,
                           z_scale = 1,
                           z_exaggeration = 1,
-                          quiet = FALSE) {
+                          quiet = FALSE,
+                          stl_file = "") {
+  if (nchar(stl_file) > 0) {
+    if (file.exists(stl_file)) {
+      stop(sprintf("file '%s' already exists, please delete or specify a different file for output"))
+    }
+  }
   hmmr_cpp(x,
            invert = invert,
            blur_sigma = blur_sigma,
@@ -20,6 +26,7 @@ hmm_triangles <- function(x,  invert = FALSE,
            max_points = max_points,
            z_scale = z_scale,
            z_exaggeration = z_exaggeration,
-           quiet = quiet
+           quiet = quiet,
+           stl_file = stl_file
            )
 }

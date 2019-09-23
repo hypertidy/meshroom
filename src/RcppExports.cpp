@@ -6,8 +6,8 @@
 using namespace Rcpp;
 
 // hmmr_cpp
-List hmmr_cpp(std::vector< std::string > x, LogicalVector invert, NumericVector blur_sigma, IntegerVector border_size, NumericVector border_height, NumericVector base_height, NumericVector max_error, IntegerVector max_triangles, IntegerVector max_points, NumericVector z_scale, NumericVector z_exaggeration, LogicalVector quiet);
-RcppExport SEXP _hmmr_hmmr_cpp(SEXP xSEXP, SEXP invertSEXP, SEXP blur_sigmaSEXP, SEXP border_sizeSEXP, SEXP border_heightSEXP, SEXP base_heightSEXP, SEXP max_errorSEXP, SEXP max_trianglesSEXP, SEXP max_pointsSEXP, SEXP z_scaleSEXP, SEXP z_exaggerationSEXP, SEXP quietSEXP) {
+List hmmr_cpp(std::vector< std::string > x, LogicalVector invert, NumericVector blur_sigma, IntegerVector border_size, NumericVector border_height, NumericVector base_height, NumericVector max_error, IntegerVector max_triangles, IntegerVector max_points, NumericVector z_scale, NumericVector z_exaggeration, LogicalVector quiet, std::vector< std::string > stl_file);
+RcppExport SEXP _hmmr_hmmr_cpp(SEXP xSEXP, SEXP invertSEXP, SEXP blur_sigmaSEXP, SEXP border_sizeSEXP, SEXP border_heightSEXP, SEXP base_heightSEXP, SEXP max_errorSEXP, SEXP max_trianglesSEXP, SEXP max_pointsSEXP, SEXP z_scaleSEXP, SEXP z_exaggerationSEXP, SEXP quietSEXP, SEXP stl_fileSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -23,7 +23,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type z_scale(z_scaleSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type z_exaggeration(z_exaggerationSEXP);
     Rcpp::traits::input_parameter< LogicalVector >::type quiet(quietSEXP);
-    rcpp_result_gen = Rcpp::wrap(hmmr_cpp(x, invert, blur_sigma, border_size, border_height, base_height, max_error, max_triangles, max_points, z_scale, z_exaggeration, quiet));
+    Rcpp::traits::input_parameter< std::vector< std::string > >::type stl_file(stl_fileSEXP);
+    rcpp_result_gen = Rcpp::wrap(hmmr_cpp(x, invert, blur_sigma, border_size, border_height, base_height, max_error, max_triangles, max_points, z_scale, z_exaggeration, quiet, stl_file));
     return rcpp_result_gen;
 END_RCPP
 }

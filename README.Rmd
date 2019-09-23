@@ -26,6 +26,7 @@ TODO
 
 - allow input from in memory matrix
 - capture output triangles
+- sort out use of hmm, see notes
 
 ```{r hmmr}
 library(hmmr)
@@ -44,6 +45,20 @@ hmmr:::hmm_triangles(f, max_triangles = 50)
 fs::dir_copy("../hmm/src", "./src")
 
 tools::package_native_routine_registration_skeleton("../hmmr", "src/init.c",character_only = FALSE)
+
+
+```
+
+```{r testing-example, eval=FALSE}
+## local testing
+library(raster)
+d <- raadtools::readtopo("etopo2", xylim = raster::extent(100, 180, -70, -30))
+d <- d - cellStats(d, min)
+d <- d / (cellStats(d, max)/256)
+d <- aggregate(d, fact = 8)
+rgdal::writeGDAL(as(d, "SpatialGridDataFrame"), "etopo.png", drivername = "PNG")
+unlink("stl.stl"); hmmr:::hmm_triangles("etopo.png",  stl_file = "stl.stl")
+rgl::rgl.clear(); r <- rgl::readSTL("stl.stl", plot = TRUE, col = "grey", lit = TRUE); rgl::aspect3d(1, 1, .2); rgl::rglwidget()
 ```
 
 ---

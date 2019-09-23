@@ -1,4 +1,5 @@
 // NOTE: 00_hmmr.cpp is the only R package relevant code in hmmr, all the rest is copied from hmm/src/
+// as at https://github.com/fogleman/hmm/tree/49f0a702c7263dd54c63800e60c54a0a79c81959
 // MDSumner 2019-09-23
 
 #include <Rcpp.h>
@@ -14,6 +15,9 @@ using namespace Rcpp;
 #include "stl.h"
 #include "triangulator.h"
 
+// for getting at triangles
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/normal.hpp>
 
 // hmmr_cpp() is adapted from hmm/src/main.cpp, WIP
 // [[Rcpp::export]]
@@ -28,7 +32,8 @@ List hmmr_cpp(std::vector< std::string > x,
               IntegerVector max_points,
               NumericVector z_scale,
               NumericVector z_exaggeration,
-              LogicalVector quiet
+              LogicalVector quiet,
+              std::vector< std::string > stl_file
               ) {
   const std::string inFile = (std::string)x[0];
   const auto hm = std::make_shared<Heightmap>(inFile);
@@ -86,9 +91,13 @@ List hmmr_cpp(std::vector< std::string > x,
     Rprintf("  vs. naive = %g%%\n", 100.f * triangles.size() / naiveTriangleCount);
   }
 
+
+
   // // write output file
   // done = timed("writing output");
-  // SaveBinarySTL(outFile, points, triangles);
+  if (stl_file[0] != "") {
+    SaveBinarySTL(stl_file[0], points, triangles);
+  }
   // done();
 
   // // compute normal map
