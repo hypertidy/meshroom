@@ -10,14 +10,15 @@
 The goal of hmmr is to provide the heightmap meshing facility of the
 [hmm library](https://github.com/fogleman/hmm) to R.
 
-It currently does not do anything, the meshing is run but nothing is
-returned but an empty list and a message.
+It currently does not do anything *unless `file_stl` is specified*, the
+meshing is run but nothing is returned but an empty list and a message.
 
 TODO
 
+  - DONE: STL output
   - allow input from in memory matrix
   - capture output triangles
-  - sort out use of hmm, see notes
+  - sort out use of hmm, see notes below and in 00\_hmmr.cpp
 
 <!-- end list -->
 
@@ -62,6 +63,9 @@ rgdal::writeGDAL(as(d, "SpatialGridDataFrame"), "etopo.png", drivername = "PNG")
 unlink("stl.stl"); hmmr:::hmm_triangles("etopo.png",  stl_file = "stl.stl")
 rgl::rgl.clear(); r <- rgl::readSTL("stl.stl", plot = TRUE, col = "grey", lit = TRUE); rgl::aspect3d(1, 1, .2); rgl::rglwidget()
 ```
+
+![alt text](man/figures/topo.png
+"Etopo2 / 8 as 77053 triangles in 38861 points")
 
 -----
 
