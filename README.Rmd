@@ -28,10 +28,11 @@ It currently does not do anything *unless `file_stl` is specified*, the meshing 
 TODO
 
 - DONE: STL output
-- allow input from in memory matrix, and maintain real world z values
+- DONE: allow input from in memory matrix
+- DONE (see below): maintain mapping for geospatial coordinates
+- maintain real world z values
 - capture output triangles
 - sort out use of hmm, see notes below and in 00_hmmr.cpp
-- DONE (see below): maintain mapping for geospatial coordinates
 
 ## Installation
 
@@ -50,12 +51,12 @@ remotes::install_github("hypertidy/hmmr")
 
 ```{r hmmr}
 library(hmmr)
-f <- system.file("extdata/volcano1.png", package = "hmmr", mustWork = TRUE)
+#f <- system.file("extdata/volcano1.png", package = "hmmr", mustWork = TRUE)
 
-hmmr::hmm_triangles(f)
+hmmr::hmm_triangles(volcano)
 
 
-hmmr::hmm_triangles(f, max_triangles = 50)
+hmmr::hmm_triangles(volcano, max_triangles = 50)
 ```
 
 Now write to STL so we can [check it out](https://github.com/hypertidy/hmmr/blob/master/man/figures/volcano1.stl). 
@@ -63,7 +64,7 @@ Now write to STL so we can [check it out](https://github.com/hypertidy/hmmr/blob
 
 
 ```{r STL, eval=FALSE}
-hmmr::hmm_triangles(f, z_exaggeration = 30, stl_file = "man/figures/volcano1.stl")
+hmmr::hmm_triangles(volcano, z_exaggeration = 30, stl_file = "man/figures/volcano1.stl")
 ```
 ## notes
 

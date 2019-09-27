@@ -11,7 +11,7 @@ hmm_triangles(x, invert = FALSE, blur_sigma = 0, border_size = 0,
   normal_file = "")
 }
 \arguments{
-\item{x}{file name, a PNG}
+\item{x}{matrix}
 
 \item{invert}{logical, invert heightmap, default is \code{FALSE}}
 
@@ -46,11 +46,13 @@ nothing at the moment, an empty list
 Create an efficient triangulation from a height map.
 }
 \details{
-Currently input must be a PNG (or JPEG) file name. So an elevation raster
-must include values within the range 0,255.
+Currently input must be a matrix.
 }
 \examples{
 library(hmmr)
 f <- system.file("extdata/volcano1.png", package = "hmmr", mustWork = TRUE)
-hmmr:::hmm_triangles(f)
+im <- 255 * (volcano - min(volcano))/diff(range(volcano))
+#tfile <- tempfile()
+#hmmr:::hmm_triangles(im, stl_file = tfile)
+#tris <- rgl::readSTL(tfile, plot = FALSE)
 }

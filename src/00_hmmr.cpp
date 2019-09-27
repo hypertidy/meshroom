@@ -16,12 +16,24 @@ using namespace Rcpp;
 #include "triangulator.h"
 
 // for getting at triangles
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/normal.hpp>
+//#define GLM_ENABLE_EXPERIMENTAL
+//#include <glm/gtx/normal.hpp>
 
+List hmap(IntegerVector width, IntegerVector height, NumericVector ddd) {
+  int len = ddd.length();
+  std::vector<float> dat(len);
+  for (int i = 0; i < ddd.length(); i++) {
+    dat[i] = ddd[i];
+  }
+  const int w = width[0];
+  const int h = height[0];
+  const auto hh = std::make_shared<Heightmap>(w, h, dat);
+
+  return List::create();
+}
 // hmmr_cpp() is adapted from hmm/src/main.cpp, WIP
 // [[Rcpp::export]]
-List hmmr_cpp(std::vector< std::string > x,
+List hmmr_cpp(NumericMatrix matr,
               LogicalVector invert,
               NumericVector blur_sigma,
               IntegerVector border_size,
@@ -36,12 +48,23 @@ List hmmr_cpp(std::vector< std::string > x,
               std::vector< std::string > stl_file,
               std::vector< std::string > normal_file
               ) {
-  const std::string inFile = (std::string)x[0];
-  const auto hm = std::make_shared<Heightmap>(inFile);
-  int w = hm->Width();
-  int h = hm->Height();
-  if (w * h == 0) {
-    Rcpp::stop( "invalid heightmap file (try png, jpg, etc.)");
+
+  int len = matr.length();
+  std::vector<float> dat(len);
+  for (int i = 0; i < len; i++) {
+    dat[i] = matr[i];
+  }
+  int w = matr.ncol();
+  int h = matr.nrow();
+  const auto hm = std::make_shared<Heightmap>(w, h, dat);
+
+
+//  const std::string inFile = (std::string)x[0];
+//  const auto hm = std::make_shared<Heightmap>(inFile);
+//  int w = hm->Width();
+//  int h = hm->Height();
+  if (w * h < 1) {
+    Rcpp::stop( "invalid matrix input");
   }
 
   // invert heightmap
@@ -92,7 +115,7 @@ List hmmr_cpp(std::vector< std::string > x,
     Rprintf("  vs. naive = %g%%\n", 100.f * triangles.size() / naiveTriangleCount);
   }
 
-
+  //double x[3];
 
   // // write output file
   // done = timed("writing output");

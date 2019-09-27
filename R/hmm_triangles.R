@@ -2,9 +2,8 @@
 #'
 #' Create an efficient triangulation from a height map.
 #'
-#' Currently input must be a PNG (or JPEG) file name. So an elevation raster
-#' must include values within the range 0,255.
-#' @param x file name, a PNG
+#' Currently input must be a matrix.
+#' @param x matrix
 #' @param invert  logical, invert heightmap, default is `FALSE`
 #' @param blur_sigma gaussian blur sigma, default is `0` for no blur
 #' @param border_size border size in pixels, default is `0`
@@ -24,7 +23,10 @@
 #' @examples
 #'library(hmmr)
 #' f <- system.file("extdata/volcano1.png", package = "hmmr", mustWork = TRUE)
-#' hmmr:::hmm_triangles(f)
+#' im <- 255 * (volcano - min(volcano))/diff(range(volcano))
+#' #tfile <- tempfile()
+#' #hmmr:::hmm_triangles(im, stl_file = tfile)
+#' #tris <- rgl::readSTL(tfile, plot = FALSE)
 hmm_triangles <- function(x,  invert = FALSE,
                           blur_sigma = 0,
                           border_size = 0,
