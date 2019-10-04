@@ -69,8 +69,9 @@ meshr::hmm_triangles(volcano, z_exaggeration = 30, stl_file = "man/figures/volca
 
 ``` 
 ## https://github.com/fogleman/hmm
-fs::dir_copy("../hmm/src", "./src")
-
+f <- fs::dir_ls("../hmm/src")
+fs::file_copy(f, "./src/", overwrite = TRUE)
+fs::file_copy("../hmm/LICENSE.md", "src/")
 tools::package_native_routine_registration_skeleton("../meshr", "src/init.c",character_only = FALSE)
 
 ```
