@@ -49,10 +49,9 @@ Create an efficient triangulation from a height map.
 Currently input must be a matrix.
 }
 \examples{
-library(hmmr)
-f <- system.file("extdata/volcano1.png", package = "hmmr", mustWork = TRUE)
+f <- system.file("extdata/volcano1.png", package = "meshr", mustWork = TRUE)
 im <- 255 * (volcano - min(volcano))/diff(range(volcano))
 #tfile <- tempfile()
-#hmmr:::hmm_triangles(im, stl_file = tfile)
+#meshr:::hmm_triangles(im, stl_file = tfile)
 #tris <- rgl::readSTL(tfile, plot = FALSE)
 }

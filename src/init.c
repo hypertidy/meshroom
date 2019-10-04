@@ -8,14 +8,14 @@
 */
 
 /* .Call calls */
-extern SEXP _hmmr_hmmr_cpp(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP _meshr_hmmr_cpp(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_hmmr_hmmr_cpp", (DL_FUNC) &_hmmr_hmmr_cpp, 14},
+    {"_meshr_hmmr_cpp", (DL_FUNC) &_meshr_hmmr_cpp, 14},
     {NULL, NULL, 0}
 };
 
-void R_init_hmmr(DllInfo *dll)
+void R_init_meshr(DllInfo *dll)
 {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);

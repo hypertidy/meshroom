@@ -56,6 +56,7 @@ List hmmr_cpp(NumericMatrix matr,
   }
   int w = matr.ncol();
   int h = matr.nrow();
+  Rprintf("%i %i\n", w, h);
   const auto hm = std::make_shared<Heightmap>(w, h, dat);
 
 

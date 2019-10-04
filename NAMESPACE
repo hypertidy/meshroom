@@ -2,4 +2,4 @@
 
 export(hmm_triangles)
 importFrom(Rcpp,sourceCpp)
-useDynLib(hmmr, .registration = TRUE)
+useDynLib(meshr, .registration = TRUE)

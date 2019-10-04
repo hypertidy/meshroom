@@ -15,13 +15,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-# hmmr
+# meshr
 
 <!-- badges: start -->
-[![Travis build status](https://travis-ci.org/hypertidy/hmmr.svg?branch=master)](https://travis-ci.org/hypertidy/hmmr)
+[![Travis build status](https://travis-ci.org/hypertidy/meshr.svg?branch=master)](https://travis-ci.org/hypertidy/meshr)
 <!-- badges: end -->
 
-The goal of hmmr is to provide the heightmap meshing facility of the [hmm library](https://github.com/fogleman/hmm) to R. 
+The goal of meshr is to provide the heightmap meshing facility of the [hmm library](https://github.com/fogleman/hmm) to R. 
 
 It currently does not do anything *unless `file_stl` is specified*, the meshing is run but nothing is returned but an empty list and a message. 
 
@@ -32,7 +32,7 @@ TODO
 - DONE (see below): maintain mapping for geospatial coordinates
 - maintain real world z values
 - capture output triangles
-- sort out use of hmm, see notes below and in 00_hmmr.cpp
+- sort out use of hmm, see notes below and in 00_meshr.cpp
 
 ## Installation
 
@@ -43,28 +43,28 @@ sudo apt-get install libglm-dev
 ```
 
 ```R
-remotes::install_github("hypertidy/hmmr")
+remotes::install_github("hypertidy/meshr")
 ```
 
 ## Example
 
 
-```{r hmmr}
-library(hmmr)
-#f <- system.file("extdata/volcano1.png", package = "hmmr", mustWork = TRUE)
+```{r meshr}
+library(meshr)
+#f <- system.file("extdata/volcano1.png", package = "meshr", mustWork = TRUE)
 
-hmmr::hmm_triangles(volcano)
+meshr::hmm_triangles(volcano)
 
 
-hmmr::hmm_triangles(volcano, max_triangles = 50)
+meshr::hmm_triangles(volcano, max_triangles = 50)
 ```
 
-Now write to STL so we can [check it out](https://github.com/hypertidy/hmmr/blob/master/man/figures/volcano1.stl). 
+Now write to STL so we can [check it out](https://github.com/hypertidy/meshr/blob/master/man/figures/volcano1.stl). 
 
 
 
 ```{r STL, eval=FALSE}
-hmmr::hmm_triangles(volcano, z_exaggeration = 30, stl_file = "man/figures/volcano1.stl")
+meshr::hmm_triangles(volcano, z_exaggeration = 30, stl_file = "man/figures/volcano1.stl")
 ```
 ## notes
 
@@ -72,7 +72,7 @@ hmmr::hmm_triangles(volcano, z_exaggeration = 30, stl_file = "man/figures/volcan
 ## https://github.com/fogleman/hmm
 fs::dir_copy("../hmm/src", "./src")
 
-tools::package_native_routine_registration_skeleton("../hmmr", "src/init.c",character_only = FALSE)
+tools::package_native_routine_registration_skeleton("../meshr", "src/init.c",character_only = FALSE)
 
 
 ```
@@ -84,8 +84,8 @@ d <- raadtools::readtopo("etopo2", xylim = raster::extent(100, 180, -70, -30))
 d <- d - cellStats(d, min)
 d <- d / (cellStats(d, max)/256)
 d <- aggregate(d, fact = 8)
-rgdal::writeGDAL(as(d, "SpatialGridDataFrame"), "etopo.png", drivername = "PNG")
-unlink("stl.stl"); hmmr:::hmm_triangles("etopo.png",  stl_file = "stl.stl")
+##rgdal::writeGDAL(as(d, "SpatialGridDataFrame"), "etopo.png", drivername = "PNG")
+unlink("stl.stl"); meshr:::hmm_triangles(as.matrix(d),  stl_file = "stl.stl")
 rgl::rgl.clear(); r <- rgl::readSTL("stl.stl", plot = TRUE, col = "grey", lit = TRUE); rgl::aspect3d(1, 1, .2); rgl::rglwidget()
 ```
 
@@ -102,14 +102,13 @@ el <- cc_elevation(ex, zoom = 5)
 el[el < 1] <- NA
 
 el <- el - cellStats(el, min)
-el <- el / (cellStats(el, max)/256)
+el <- el / (cellStats(el, max)/255)
 
-tfile <- tempfile(fileext = ".png")
-rgdal::writeGDAL(as(el, "SpatialGridDataFrame"), tfile, drivername = "PNG")
+#tfile <- tempfile(fileext = ".png")
+#rgdal::writeGDAL(as(el, "SpatialGridDataFrame"), tfile, drivername = "PNG")
 sfile <- tempfile(fileext = ".stl")
-hmmr:::hmm_triangles(tfile,  stl_file = sfile, z_scale = TRUE)
+meshr:::hmm_triangles(as.matrix(el),  stl_file = sfile, z_scale = TRUE)
 tris <- rgl::readSTL(sfile, plot = FALSE)
-
 ## now re-map geographic coordinates back int
 library(raster)
 cell <- cellFromXY(setExtent(el, raster::extent(1, ncol(el), 1, nrow(el))), 
@@ -133,8 +132,8 @@ rgl::par3d()$bbox
 
 
 ---
- Please note that the 'hmmr' project is released with a
-  [Contributor Code of Conduct](https://github.com/hypertidy/hmmr/blob/master/CODE_OF_CONDUCT.md).
+ Please note that the 'meshr' project is released with a
+  [Contributor Code of Conduct](https://github.com/hypertidy/meshr/blob/master/CODE_OF_CONDUCT.md).
   By contributing to this project, you agree to abide by its terms.
   
 

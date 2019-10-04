@@ -21,11 +21,10 @@
 #' @export
 #'
 #' @examples
-#'library(hmmr)
-#' f <- system.file("extdata/volcano1.png", package = "hmmr", mustWork = TRUE)
+#' f <- system.file("extdata/volcano1.png", package = "meshr", mustWork = TRUE)
 #' im <- 255 * (volcano - min(volcano))/diff(range(volcano))
 #' #tfile <- tempfile()
-#' #hmmr:::hmm_triangles(im, stl_file = tfile)
+#' #meshr:::hmm_triangles(im, stl_file = tfile)
 #' #tris <- rgl::readSTL(tfile, plot = FALSE)
 hmm_triangles <- function(x,  invert = FALSE,
                           blur_sigma = 0,
