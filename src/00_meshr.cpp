@@ -51,12 +51,13 @@ List hmmr_cpp(NumericMatrix matr,
 
   int len = matr.length();
   std::vector<float> dat(len);
+ // Rprintf("len: %i\n",len);
   for (int i = 0; i < len; i++) {
     dat[i] = matr[i];
   }
-  int w = matr.ncol();
-  int h = matr.nrow();
-  Rprintf("%i %i\n", w, h);
+  int h = matr.ncol();
+  int w = matr.nrow();
+//  Rprintf("%i %i\n", w, h);
   const auto hm = std::make_shared<Heightmap>(w, h, dat);
 
 
