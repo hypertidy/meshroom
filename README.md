@@ -12,8 +12,11 @@ status](https://travis-ci.org/hypertidy/meshr.svg?branch=master)](https://travis
 The goal of meshr is to provide the heightmap meshing facility of the
 [hmm library](https://github.com/fogleman/hmm) to R.
 
-It currently does not do anything *unless `file_stl` is specified*, the
-meshing is run but nothing is returned but an empty list and a message.
+It currently returns a matrix of XYZ coordinates - every three rows is a
+triangle. We can also set `file_stl` to write to STL if needed.
+
+WARNING: the orientation of the input and output is not assured at the
+moment and will change.
 
 TODO
 
@@ -21,8 +24,8 @@ TODO
   - DONE: allow input from in memory matrix
   - DONE (see below): maintain mapping for geospatial coordinates
   - DONE auto-rescale input to full greyscale range
+  - DONE capture output triangles
   - maintain real world z values
-  - capture output triangles
   - sort out use of hmm, see notes below and in 00\_meshr.cpp
 
 ## Installation
@@ -41,23 +44,47 @@ remotes::install_github("hypertidy/meshr")
 library(meshr)
 #f <- system.file("extdata/volcano1.png", package = "meshr", mustWork = TRUE)
 
-meshr::hmm_triangles(volcano)
+m <- meshr::hmm_triangles(volcano)
 #>   error = 5.96046e-08
 #>   points = 3479
 #>   triangles = 6795
 #>   vs. naive = 65.843%
-#> list()
 
 
-meshr::hmm_triangles(volcano, max_triangles = 50)
+m50 <- meshr::hmm_triangles(volcano, max_triangles = 50)
 #>   error = 0.161089
 #>   points = 29
 #>   triangles = 51
 #>   vs. naive = 0.494186%
-#> list()
 ```
 
-Now write to STL so we can [check it
+Compare different numbers of triangles from volcano.
+
+``` r
+plot(m50, type = "n", asp = 1)
+ii <- rbind(matrix(seq_len(nrow(m50)), nrow = 3), NA)
+polygon(m50[ii, ])
+```
+
+<img src="man/figures/README-triangles-1.png" width="100%" />
+
+``` r
+
+
+m500 <- meshr::hmm_triangles(volcano, max_triangles = 500)
+#>   error = 0.029703
+#>   points = 260
+#>   triangles = 501
+#>   vs. naive = 4.85465%
+
+plot(m500, type = "n", asp = 1)
+ii <- rbind(matrix(seq_len(nrow(m500)), nrow = 3), NA)
+polygon(m500[ii, ])
+```
+
+<img src="man/figures/README-triangles-2.png" width="100%" />
+
+Now write to STL if needed [check it
 out](https://github.com/hypertidy/meshr/blob/master/man/figures/volcano1.stl).
 
 ``` r
@@ -95,10 +122,8 @@ library(ceramic)
 ex <- raster::extent(144, 149, -44, -40)
 el <- cc_elevation(ex, zoom = 5)
 el[el < 1] <- NA
+tris <- meshr:::hmm_triangles(as.matrix(el),   z_scale = TRUE)
 
-sfile <- tempfile(fileext = ".stl")
-meshr:::hmm_triangles(as.matrix(el),  stl_file = sfile, z_scale = TRUE)
-tris <- rgl::readSTL(sfile, plot = FALSE)
 ## now re-map geographic coordinates back int
 library(raster)
 cell <- cellFromXY(setExtent(el, raster::extent(1, ncol(el), 1, nrow(el))), 

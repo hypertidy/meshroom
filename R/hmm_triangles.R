@@ -20,14 +20,15 @@
 #' @param auto_level if `TRUE` input matrix is rescaled to full grayscale range
 #' @param normal_file if set the normal map will be written to file, default is no write `""`
 #'
-#' @return nothing at the moment, an empty list
+#' @return matrix of triangle vertices
 #' @export
 #'
 #' @examples
 #' f <- system.file("extdata/volcano1.png", package = "meshr", mustWork = TRUE)
 #' im <- 255 * (volcano - min(volcano))/diff(range(volcano))
 #' #tfile <- tempfile()
-#' #meshr:::hmm_triangles(im, stl_file = tfile)
+#' ## tris and o below should be the same
+#' #o <- meshr:::hmm_triangles(im, stl_file = tfile)
 #' #tris <- rgl::readSTL(tfile, plot = FALSE)
 hmm_triangles <- function(x,  invert = FALSE,
                           blur_sigma = 0,
@@ -53,7 +54,7 @@ hmm_triangles <- function(x,  invert = FALSE,
       stop(sprintf("file '%s' already exists, please delete or specify a different file for output", normal_file))
     }
   }
-  hmmr_cpp(x,
+  result <- hmmr_cpp(x,
            invert = invert,
            blur_sigma = blur_sigma,
            border_size = border_size,
@@ -69,4 +70,8 @@ hmm_triangles <- function(x,  invert = FALSE,
            stl_file = stl_file,
            normal_file = normal_file
            )
+  ## unpack raw bytes and return matrix
+  nn <- length(result[[1]])
+  invisible(matrix(readBin(result[[1]], what = "numeric", n = nn/4, size = 4),
+         ncol = 3L, byrow = TRUE))
 }
