@@ -1,15 +1,15 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# meshr
+# meshroom
 
 <!-- badges: start -->
 
 [![Travis build
-status](https://travis-ci.org/hypertidy/meshr.svg?branch=master)](https://travis-ci.org/hypertidy/meshr)
+status](https://travis-ci.org/hypertidy/meshroom.svg?branch=master)](https://travis-ci.org/hypertidy/meshroom)
 <!-- badges: end -->
 
-The goal of meshr is to provide the heightmap meshing facility of the
+The goal of meshroom is to provide the heightmap meshing facility of the
 [hmm library](https://github.com/fogleman/hmm) to R.
 
 It currently returns a matrix of XYZ coordinates - every three rows is a
@@ -26,7 +26,7 @@ TODO
   - DONE auto-rescale input to full greyscale range
   - DONE capture output triangles
   - maintain real world z values
-  - sort out use of hmm, see notes below and in 00\_meshr.cpp
+  - sort out use of hmm, see notes below and in 00\_meshroom.cpp
   - support Windows
   - support MacOS
 
@@ -37,23 +37,23 @@ Only on Linux.
     sudo apt-get install libglm-dev
 
 ``` r
-remotes::install_github("hypertidy/meshr")
+remotes::install_github("hypertidy/meshroom")
 ```
 
 ## Example
 
 ``` r
-library(meshr)
-#f <- system.file("extdata/volcano1.png", package = "meshr", mustWork = TRUE)
+library(meshroom)
+#f <- system.file("extdata/volcano1.png", package = "meshroom", mustWork = TRUE)
 
-m <- meshr::hmm_triangles(volcano)
+m <- meshroom::hmm_triangles(volcano)
 #>   error = 5.96046e-08
 #>   points = 3479
 #>   triangles = 6795
 #>   vs. naive = 65.843%
 
 
-m50 <- meshr::hmm_triangles(volcano, max_triangles = 50)
+m50 <- meshroom::hmm_triangles(volcano, max_triangles = 50)
 #>   error = 0.161089
 #>   points = 29
 #>   triangles = 51
@@ -73,7 +73,7 @@ polygon(m50[ii, ])
 ``` r
 
 
-m500 <- meshr::hmm_triangles(volcano, max_triangles = 500)
+m500 <- meshroom::hmm_triangles(volcano, max_triangles = 500)
 #>   error = 0.029703
 #>   points = 260
 #>   triangles = 501
@@ -87,10 +87,10 @@ polygon(m500[ii, ])
 <img src="man/figures/README-triangles-2.png" width="100%" />
 
 Now write to STL if needed [check it
-out](https://github.com/hypertidy/meshr/blob/master/man/figures/volcano1.stl).
+out](https://github.com/hypertidy/meshroom/blob/master/man/figures/volcano1.stl).
 
 ``` r
-meshr::hmm_triangles(volcano, z_exaggeration = 30, stl_file = "man/figures/volcano2.stl")
+meshroom::hmm_triangles(volcano, z_exaggeration = 30, stl_file = "man/figures/volcano2.stl")
 ```
 
 ## notes
@@ -100,7 +100,7 @@ meshr::hmm_triangles(volcano, z_exaggeration = 30, stl_file = "man/figures/volca
 f <- fs::dir_ls("../hmm/src")
 fs::file_copy(f, "./src/", overwrite = TRUE)
 fs::file_copy("../hmm/LICENSE.md", "src/")
-tools::package_native_routine_registration_skeleton("../meshr", "src/init.c",character_only = FALSE)
+tools::package_native_routine_registration_skeleton("../meshroom", "src/init.c",character_only = FALSE)
 
 ```
 
@@ -110,7 +110,7 @@ library(raster)
 d <- raadtools::readtopo("etopo2", xylim = raster::extent(100, 180, -70, -30))
 d <- aggregate(d, fact = 8)
 
-unlink("stl.stl"); meshr:::hmm_triangles(as.matrix(d),  stl_file = "stl.stl", invert = T)
+unlink("stl.stl"); meshroom:::hmm_triangles(as.matrix(d),  stl_file = "stl.stl", invert = T)
 rgl::rgl.clear(); r <- rgl::readSTL("stl.stl", plot = TRUE, col = "grey", lit = TRUE); rgl::aspect3d(1, 1, .2); rgl::rglwidget()
 ```
 
@@ -124,7 +124,7 @@ library(ceramic)
 ex <- raster::extent(144, 149, -44, -40)
 el <- cc_elevation(ex, zoom = 5)
 el[el < 1] <- NA
-tris <- meshr:::hmm_triangles(as.matrix(el),   z_scale = TRUE)
+tris <- meshroom:::hmm_triangles(as.matrix(el),   z_scale = TRUE)
 
 ## now re-map geographic coordinates back int
 library(raster)
@@ -147,7 +147,7 @@ rgl::par3d()$bbox
 
 -----
 
-Please note that the ‘meshr’ project is released with a [Contributor
+Please note that the ‘meshroom’ project is released with a [Contributor
 Code of
-Conduct](https://github.com/hypertidy/meshr/blob/master/CODE_OF_CONDUCT.md).
+Conduct](https://github.com/hypertidy/meshroom/blob/master/CODE_OF_CONDUCT.md).
 By contributing to this project, you agree to abide by its terms.
