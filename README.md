@@ -20,6 +20,7 @@ TODO
   - DONE: STL output
   - DONE: allow input from in memory matrix
   - DONE (see below): maintain mapping for geospatial coordinates
+  - DONE auto-rescale input to full greyscale range
   - maintain real world z values
   - capture output triangles
   - sort out use of hmm, see notes below and in 00\_meshr.cpp
@@ -41,20 +42,18 @@ library(meshr)
 #f <- system.file("extdata/volcano1.png", package = "meshr", mustWork = TRUE)
 
 meshr::hmm_triangles(volcano)
-#> 61 87
-#>   error = 7.62939e-06
-#>   points = 4534
-#>   triangles = 8833
-#>   vs. naive = 85.5911%
+#>   error = 5.96046e-08
+#>   points = 3479
+#>   triangles = 6795
+#>   vs. naive = 65.843%
 #> list()
 
 
 meshr::hmm_triangles(volcano, max_triangles = 50)
-#> 61 87
-#>   error = 87.5576
+#>   error = 0.161089
 #>   points = 29
-#>   triangles = 50
-#>   vs. naive = 0.484496%
+#>   triangles = 51
+#>   vs. naive = 0.494186%
 #> list()
 ```
 
@@ -62,7 +61,7 @@ Now write to STL so we can [check it
 out](https://github.com/hypertidy/meshr/blob/master/man/figures/volcano1.stl).
 
 ``` r
-meshr::hmm_triangles(volcano, z_exaggeration = 30, stl_file = "man/figures/volcano1.stl")
+meshr::hmm_triangles(volcano, z_exaggeration = 30, stl_file = "man/figures/volcano2.stl")
 ```
 
 ## notes
@@ -80,11 +79,9 @@ tools::package_native_routine_registration_skeleton("../meshr", "src/init.c",cha
 ## local testing
 library(raster)
 d <- raadtools::readtopo("etopo2", xylim = raster::extent(100, 180, -70, -30))
-d <- d - cellStats(d, min)
-d <- d / (cellStats(d, max)/256)
 d <- aggregate(d, fact = 8)
-##rgdal::writeGDAL(as(d, "SpatialGridDataFrame"), "etopo.png", drivername = "PNG")
-unlink("stl.stl"); meshr:::hmm_triangles(as.matrix(d),  stl_file = "stl.stl")
+
+unlink("stl.stl"); meshr:::hmm_triangles(as.matrix(d),  stl_file = "stl.stl", invert = T)
 rgl::rgl.clear(); r <- rgl::readSTL("stl.stl", plot = TRUE, col = "grey", lit = TRUE); rgl::aspect3d(1, 1, .2); rgl::rglwidget()
 ```
 
@@ -99,11 +96,6 @@ ex <- raster::extent(144, 149, -44, -40)
 el <- cc_elevation(ex, zoom = 5)
 el[el < 1] <- NA
 
-el <- el - cellStats(el, min)
-el <- el / (cellStats(el, max)/255)
-
-#tfile <- tempfile(fileext = ".png")
-#rgdal::writeGDAL(as(el, "SpatialGridDataFrame"), tfile, drivername = "PNG")
 sfile <- tempfile(fileext = ".stl")
 meshr:::hmm_triangles(as.matrix(el),  stl_file = sfile, z_scale = TRUE)
 tris <- rgl::readSTL(sfile, plot = FALSE)

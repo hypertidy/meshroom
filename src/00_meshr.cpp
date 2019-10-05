@@ -39,6 +39,7 @@ List hmmr_cpp(NumericMatrix matr,
               IntegerVector border_size,
               NumericVector border_height,
               NumericVector base_height,
+              LogicalVector auto_level,
               NumericVector max_error,
               IntegerVector max_triangles,
               IntegerVector max_points,
@@ -60,7 +61,9 @@ List hmmr_cpp(NumericMatrix matr,
 //  Rprintf("%i %i\n", w, h);
   const auto hm = std::make_shared<Heightmap>(w, h, dat);
 
-
+  if (auto_level[0]) {
+    hm->AutoLevel();
+  }
 //  const std::string inFile = (std::string)x[0];
 //  const auto hm = std::make_shared<Heightmap>(inFile);
 //  int w = hm->Width();

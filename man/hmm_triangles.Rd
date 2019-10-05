@@ -5,9 +5,9 @@
 \title{Heightmap meshing}
 \usage{
 hmm_triangles(x, invert = FALSE, blur_sigma = 0, border_size = 0,
-  border_height = 1, base_height = 0, max_error = 0.001,
-  max_triangles = 0, max_points = 0, z_scale = 1,
-  z_exaggeration = 1, quiet = FALSE, stl_file = "",
+  border_height = 1, base_height = 0, auto_level = TRUE,
+  max_error = 0.001, max_triangles = 0, max_points = 0,
+  z_scale = 1, z_exaggeration = 1, quiet = FALSE, stl_file = "",
   normal_file = "")
 }
 \arguments{
@@ -22,6 +22,8 @@ hmm_triangles(x, invert = FALSE, blur_sigma = 0, border_size = 0,
 \item{border_height}{border z height, default is \code{1}}
 
 \item{base_height}{solid base height, default is no base \code{0}}
+
+\item{auto_level}{if \code{TRUE} input matrix is rescaled to full grayscale range}
 
 \item{max_error}{maximum triangulation error, default is \code{0.001}}
 

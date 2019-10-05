@@ -3,6 +3,7 @@
 #' Create an efficient triangulation from a height map.
 #'
 #' Currently input must be a matrix.
+#'
 #' @param x matrix
 #' @param invert  logical, invert heightmap, default is `FALSE`
 #' @param blur_sigma gaussian blur sigma, default is `0` for no blur
@@ -16,7 +17,9 @@
 #' @param z_exaggeration z exaggeration, default is `1`
 #' @param quiet report metrics from triangulation, default is `TRUE`
 #' @param stl_file if set the triangulation will be written to file, default is no write `""`
+#' @param auto_level if `TRUE` input matrix is rescaled to full grayscale range
 #' @param normal_file if set the normal map will be written to file, default is no write `""`
+#'
 #' @return nothing at the moment, an empty list
 #' @export
 #'
@@ -31,6 +34,7 @@ hmm_triangles <- function(x,  invert = FALSE,
                           border_size = 0,
                           border_height = 1,
                           base_height = 0,
+                          auto_level = TRUE,
                           max_error = 0.001,
                           max_triangles = 0,
                           max_points = 0,
@@ -55,6 +59,7 @@ hmm_triangles <- function(x,  invert = FALSE,
            border_size = border_size,
            border_height = border_height,
            base_height = base_height,
+           auto_level = auto_level,
            max_error = max_error,
            max_triangles = max_triangles,
            max_points = max_points,

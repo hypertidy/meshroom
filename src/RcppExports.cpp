@@ -6,8 +6,8 @@
 using namespace Rcpp;
 
 // hmmr_cpp
-List hmmr_cpp(NumericMatrix matr, LogicalVector invert, NumericVector blur_sigma, IntegerVector border_size, NumericVector border_height, NumericVector base_height, NumericVector max_error, IntegerVector max_triangles, IntegerVector max_points, NumericVector z_scale, NumericVector z_exaggeration, LogicalVector quiet, std::vector< std::string > stl_file, std::vector< std::string > normal_file);
-RcppExport SEXP _meshr_hmmr_cpp(SEXP matrSEXP, SEXP invertSEXP, SEXP blur_sigmaSEXP, SEXP border_sizeSEXP, SEXP border_heightSEXP, SEXP base_heightSEXP, SEXP max_errorSEXP, SEXP max_trianglesSEXP, SEXP max_pointsSEXP, SEXP z_scaleSEXP, SEXP z_exaggerationSEXP, SEXP quietSEXP, SEXP stl_fileSEXP, SEXP normal_fileSEXP) {
+List hmmr_cpp(NumericMatrix matr, LogicalVector invert, NumericVector blur_sigma, IntegerVector border_size, NumericVector border_height, NumericVector base_height, LogicalVector auto_level, NumericVector max_error, IntegerVector max_triangles, IntegerVector max_points, NumericVector z_scale, NumericVector z_exaggeration, LogicalVector quiet, std::vector< std::string > stl_file, std::vector< std::string > normal_file);
+RcppExport SEXP _meshr_hmmr_cpp(SEXP matrSEXP, SEXP invertSEXP, SEXP blur_sigmaSEXP, SEXP border_sizeSEXP, SEXP border_heightSEXP, SEXP base_heightSEXP, SEXP auto_levelSEXP, SEXP max_errorSEXP, SEXP max_trianglesSEXP, SEXP max_pointsSEXP, SEXP z_scaleSEXP, SEXP z_exaggerationSEXP, SEXP quietSEXP, SEXP stl_fileSEXP, SEXP normal_fileSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -17,6 +17,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< IntegerVector >::type border_size(border_sizeSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type border_height(border_heightSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type base_height(base_heightSEXP);
+    Rcpp::traits::input_parameter< LogicalVector >::type auto_level(auto_levelSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type max_error(max_errorSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type max_triangles(max_trianglesSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type max_points(max_pointsSEXP);
@@ -25,7 +26,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< LogicalVector >::type quiet(quietSEXP);
     Rcpp::traits::input_parameter< std::vector< std::string > >::type stl_file(stl_fileSEXP);
     Rcpp::traits::input_parameter< std::vector< std::string > >::type normal_file(normal_fileSEXP);
-    rcpp_result_gen = Rcpp::wrap(hmmr_cpp(matr, invert, blur_sigma, border_size, border_height, base_height, max_error, max_triangles, max_points, z_scale, z_exaggeration, quiet, stl_file, normal_file));
+    rcpp_result_gen = Rcpp::wrap(hmmr_cpp(matr, invert, blur_sigma, border_size, border_height, base_height, auto_level, max_error, max_triangles, max_points, z_scale, z_exaggeration, quiet, stl_file, normal_file));
     return rcpp_result_gen;
 END_RCPP
 }
