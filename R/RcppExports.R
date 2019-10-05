@@ -2,6 +2,6 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 hmmr_cpp <- function(matr, invert, blur_sigma, border_size, border_height, base_height, auto_level, max_error, max_triangles, max_points, z_scale, z_exaggeration, quiet, stl_file, normal_file) {
-    .Call(`_meshr_hmmr_cpp`, matr, invert, blur_sigma, border_size, border_height, base_height, auto_level, max_error, max_triangles, max_points, z_scale, z_exaggeration, quiet, stl_file, normal_file)
+    .Call(`_meshroom_hmmr_cpp`, matr, invert, blur_sigma, border_size, border_height, base_height, auto_level, max_error, max_triangles, max_points, z_scale, z_exaggeration, quiet, stl_file, normal_file)
 }
 
