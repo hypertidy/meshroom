@@ -28,8 +28,8 @@
 #' im <- 255 * (volcano - min(volcano))/diff(range(volcano))
 #' #tfile <- tempfile()
 #' ## tris and o below should be the same
-#' #o <- meshr:::hmm_triangles(im, stl_file = tfile)
-#' #tris <- rgl::readSTL(tfile, plot = FALSE)
+#' o <- meshr:::hmm_triangles(im, stl_file = tfile)
+#' tris <- rgl::readSTL(tfile, plot = FALSE)
 hmm_triangles <- function(x,  invert = FALSE,
                           blur_sigma = 0,
                           border_size = 0,
