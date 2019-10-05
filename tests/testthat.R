@@ -1,4 +1,4 @@
 library(testthat)
-library(meshr)
+library(meshroom)
 
-test_check("meshr")
+test_check("meshroom")

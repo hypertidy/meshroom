@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // hmmr_cpp
 List hmmr_cpp(NumericMatrix matr, LogicalVector invert, NumericVector blur_sigma, IntegerVector border_size, NumericVector border_height, NumericVector base_height, LogicalVector auto_level, NumericVector max_error, IntegerVector max_triangles, IntegerVector max_points, NumericVector z_scale, NumericVector z_exaggeration, LogicalVector quiet, std::vector< std::string > stl_file, std::vector< std::string > normal_file);
-RcppExport SEXP _meshr_hmmr_cpp(SEXP matrSEXP, SEXP invertSEXP, SEXP blur_sigmaSEXP, SEXP border_sizeSEXP, SEXP border_heightSEXP, SEXP base_heightSEXP, SEXP auto_levelSEXP, SEXP max_errorSEXP, SEXP max_trianglesSEXP, SEXP max_pointsSEXP, SEXP z_scaleSEXP, SEXP z_exaggerationSEXP, SEXP quietSEXP, SEXP stl_fileSEXP, SEXP normal_fileSEXP) {
+RcppExport SEXP _meshroom_hmmr_cpp(SEXP matrSEXP, SEXP invertSEXP, SEXP blur_sigmaSEXP, SEXP border_sizeSEXP, SEXP border_heightSEXP, SEXP base_heightSEXP, SEXP auto_levelSEXP, SEXP max_errorSEXP, SEXP max_trianglesSEXP, SEXP max_pointsSEXP, SEXP z_scaleSEXP, SEXP z_exaggerationSEXP, SEXP quietSEXP, SEXP stl_fileSEXP, SEXP normal_fileSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
