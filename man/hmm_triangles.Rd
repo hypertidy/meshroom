@@ -42,7 +42,7 @@ hmm_triangles(x, invert = FALSE, blur_sigma = 0, border_size = 0,
 \item{normal_file}{if set the normal map will be written to file, default is no write \code{""}}
 }
 \value{
-nothing at the moment, an empty list
+matrix of triangle vertices
 }
 \description{
 Create an efficient triangulation from a height map.
@@ -54,6 +54,7 @@ Currently input must be a matrix.
 f <- system.file("extdata/volcano1.png", package = "meshr", mustWork = TRUE)
 im <- 255 * (volcano - min(volcano))/diff(range(volcano))
 #tfile <- tempfile()
-#meshr:::hmm_triangles(im, stl_file = tfile)
+## tris and o below should be the same
+#o <- meshr:::hmm_triangles(im, stl_file = tfile)
 #tris <- rgl::readSTL(tfile, plot = FALSE)
 }
