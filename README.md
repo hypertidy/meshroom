@@ -27,6 +27,8 @@ TODO
   - DONE capture output triangles
   - maintain real world z values
   - sort out use of hmm, see notes below and in 00\_meshr.cpp
+  - support Windows
+  - support MacOS
 
 ## Installation
 
